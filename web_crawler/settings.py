@@ -13,10 +13,10 @@ SPIDER_MODULES = ['web_crawler.spiders']
 NEWSPIDER_MODULE = 'web_crawler.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'web_crawler (+http://www.yourdomain.com)'
-
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko)'
+RANDOM_UA_TYPE = "random"
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
@@ -24,13 +24,13 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+# DOWNLOAD_DELAY = 1
 # The download delay setting will honor only one of:
-# CONCURRENT_REQUESTS_PER_DOMAIN = 16
-# CONCURRENT_REQUESTS_PER_IP = 16
+#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+#CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-# COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
@@ -62,7 +62,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'web_crawler.pipelines.WebCrawlerPipeline': 300,
+    'web_crawler.pipelines.DataSavePipeline': 2,
+    # 'web_crawler.pipelines.WebCrawlerPipeline': 3,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -71,7 +72,7 @@ ITEM_PIPELINES = {
 # The initial download delay
 # AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
-# AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 3 # 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 # AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
@@ -85,3 +86,11 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+## My settings
+
+CATEGORY_choices = ['Programmable-Devices', 'FPGA-Intellectual-Property', 'FPGA-SoC-And-CPLD-Boards-And'
+                    'Intel-FPGA-University-Program', 'Application-Acceleration-With',
+                    'Nios-II-Embedded-Design-Suite', 'Intel-SoC-FPGA-Embedded', 'Intel-Quartus-Prime-Software',
+                    'Intel-FPGA-Software-Installation', 'Intel-High-Level-Design']
+CATEGORY = 'Intel-SoC-FPGA-Embedded'
