@@ -26,8 +26,8 @@ ROBOTSTXT_OBEY = False
 # See also autothrottle settings and docs
 # DOWNLOAD_DELAY = 1
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-#CONCURRENT_REQUESTS_PER_IP = 16
+# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+# CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
@@ -72,7 +72,7 @@ ITEM_PIPELINES = {
 # The initial download delay
 # AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
-AUTOTHROTTLE_MAX_DELAY = 3 # 60
+AUTOTHROTTLE_MAX_DELAY = 5  # 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 # AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
@@ -87,10 +87,18 @@ AUTOTHROTTLE_MAX_DELAY = 3 # 60
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-## My settings
+# # My settings
 
-CATEGORY_choices = ['Programmable-Devices', 'FPGA-Intellectual-Property', 'FPGA-SoC-And-CPLD-Boards-And'
+CATEGORY_choices = ['Programmable-Devices', 'FPGA-Intellectual-Property', 'FPGA-SoC-And-CPLD-Boards-And',
                     'Intel-FPGA-University-Program', 'Application-Acceleration-With',
                     'Nios-II-Embedded-Design-Suite', 'Intel-SoC-FPGA-Embedded', 'Intel-Quartus-Prime-Software',
                     'Intel-FPGA-Software-Installation', 'Intel-High-Level-Design']
-CATEGORY = 'Intel-SoC-FPGA-Embedded'
+CATEGORY = CATEGORY_choices[7]
+
+# import os, time
+#
+# LOG_STDOUT = True
+# root_folder = os.getcwd()
+# LOG_FILE = os.path.join(root_folder, 'logs', f'LOG_{CATEGORY}.txt')
+# if not os.path.exists(LOG_FILE):
+#     with open(LOG_FILE, 'w'): pass

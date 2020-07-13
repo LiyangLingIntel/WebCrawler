@@ -7,6 +7,8 @@ def category_to_suffix(cate_name):
         return cate_name[6:] + '-development-suite'
     elif cate_name == 'application-acceleration-with':
         return 'application-acceleration-fpgas'
+    elif cate_name == 'intel-fpga-software-installation':
+        return cate_name[6:] + '-licensing'
     elif cate_name.startswith('intel'):
         return cate_name[6:]
     else:

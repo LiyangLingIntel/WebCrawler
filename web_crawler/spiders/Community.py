@@ -49,7 +49,7 @@ class CommunitySpider(scrapy.Spider):
 
         class_description = 'lia-message-body-content'
         content_nodes_text = question_node.xpath(f'.//div[@class="{class_description}"]').get('')
-        contents = Selector(text=content_nodes_text).xpath('//p/text() | //h1/text() | //h2/text() | //h3/text()')
+        contents = Selector(text=content_nodes_text).xpath('.//*[not(self::code)]/text()')
         description = ''
         for content in contents:
             desc_text = content.get().strip()  # Selector.get() v.s. SelectorList.get(default=None)
