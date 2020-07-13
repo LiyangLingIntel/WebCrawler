@@ -7,7 +7,7 @@ from urllib import parse
 
 from web_crawler.items import WebCrawlerItem, WebCrawlerItemLoader
 from web_crawler.settings import CATEGORY
-from utils.string_helper import category_to_suffix
+from utils.string_helper import category_to_suffix, remove_blank
 
 
 class CommunitySpider(scrapy.Spider):
@@ -53,8 +53,7 @@ class CommunitySpider(scrapy.Spider):
         description = ''
         for content in contents:
             desc_text = content.get().strip()  # Selector.get() v.s. SelectorList.get(default=None)
-            description += desc_text
-            description += ' '
+            description += remove_blank(desc_text)
         item_loader.add_value('description', description)
 
         yield item_loader.load_item()
