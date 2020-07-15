@@ -5,7 +5,7 @@ from scrapy.http import Request
 from pydispatch import dispatcher
 from urllib import parse
 
-from web_crawler.items import WebCrawlerItem, WebCrawlerItemLoader
+from web_crawler.items import CategoryItem, PostItem, WebCrawlerItemLoader
 from web_crawler.settings import CATEGORY
 from utils.string_helper import category_to_suffix, remove_blank
 
@@ -59,7 +59,7 @@ class CommunitySpider(scrapy.Spider):
         yield Request(url=next_url, callback=self.parse)
 
     def parse_post(self, response):
-        item_loader = WebCrawlerItemLoader(item=WebCrawlerItem())
+        item_loader = WebCrawlerItemLoader(item=CategoryItem())
 
         class_question_div = 'lia-quilt lia-quilt-forum-message lia-quilt-layout-forum-topic-message-support'
         question_node_text = response.xpath(f'//div[@class="{class_question_div}"]').get('')

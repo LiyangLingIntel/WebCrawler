@@ -8,9 +8,12 @@ from scrapy.loader import ItemLoader
 from scrapy.loader.processors import MapCompose, TakeFirst, Join, Identity
 
 
-class WebCrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+class CategoryItem(scrapy.Item):
+    block = scrapy.Field()
+    url = scrapy.Field()
+
+
+class PostItem(scrapy.Item):
     subject = scrapy.Field()
     description = scrapy.Field()
 
