@@ -89,11 +89,15 @@ AUTOTHROTTLE_MAX_DELAY = 5  # 60
 
 # # My settings
 
-CATEGORY_choices = ['Programmable-Devices', 'FPGA-Intellectual-Property', 'FPGA-SoC-And-CPLD-Boards-And',
-                    'Intel-FPGA-University-Program', 'Application-Acceleration-With',
-                    'Nios-II-Embedded-Design-Suite', 'Intel-SoC-FPGA-Embedded', 'Intel-Quartus-Prime-Software',
-                    'Intel-FPGA-Software-Installation', 'Intel-High-Level-Design']
-CATEGORY = CATEGORY_choices[7]
+CATEGORY_choices = {'fpga': ['Programmable-Devices', 'FPGA-Intellectual-Property', 'FPGA-SoC-And-CPLD-Boards-And',
+                             'Intel-FPGA-University-Program', 'Application-Acceleration-With',
+                             'Nios-II-Embedded-Design-Suite', 'Intel-SoC-FPGA-Embedded', 'Intel-Quartus-Prime-Software',
+                             'Intel-FPGA-Software-Installation', 'Intel-High-Level-Design'],
+                    'software': ['Intel-Unite-App', 'Intel-vPro-Platform', 'Intel-Trusted-Execution',
+                                 'Intel-Software-Guard-Extensions', 'Intel-Dynamic-Application-Loader',
+                                 'Intel-ISA-Extensions', 'Intel-Embree-Ray-Tracing-Kernels', 'Media-Intel-oneAPI-Video',
+                                 'Intel-Graphics-Performance', 'Developing-Games-Graphics-on']}
+CATEGORY = CATEGORY_choices['software'][0]
 
 # import os, time
 #

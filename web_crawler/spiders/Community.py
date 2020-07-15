@@ -11,9 +11,9 @@ from utils.string_helper import category_to_suffix, remove_blank
 
 
 class CommunitySpider(scrapy.Spider):
-    name = 'intel_community'
+    name = 'intel_community_crawler'
     allowed_domains = ['community.intel.com']
-    start_urls = [f'https://community.intel.com/t5/{CATEGORY}/bd-p/{category_to_suffix(CATEGORY)}']
+    start_urls = ['https://community.intel.com/']
     category_root = f'https://community.intel.com/t5/{CATEGORY}'
 
     def __init__(self, **kwargs):
@@ -21,10 +21,33 @@ class CommunitySpider(scrapy.Spider):
         self.fail_urls = []
         dispatcher.connect(self.handle_spider_closed, signals.spider_closed)
 
+        self.cate_nodes = ['lia-tree-node-9', 'lia-tree-node-37', 'lia-tree-node-87']
+
     def handle_spider_closed(self, spider, reason):
         self.crawler.stats.set_value("failed_urls", ",".join(self.fail_urls))
 
     def parse(self, response):
+        for node_id in self.cate_nodes:
+            node_prefix = f'"{node_id} lia-list-tree-toggle-node"'
+            category_block = response.xpath(f'//li[starts-with(@class, {node_prefix})]')
+
+            # send current category block to spider
+            block_name = category_block.xpath('./a/text()').get()
+            self.crawler.stats.set_value('category_block', block_name)
+
+            category_suffixes = category_block.xpath('.//a/@href').getall()
+
+            category_suffixes = [suf for suf in category_suffixes if self._is_category_url(suf)]
+            for category_suffix in category_suffixes:
+                # send current category name to spider
+                self.crawler.stats.set_value('category_name', category_suffix.split('/')[-1])
+                category_url = parse.urljoin(self.start_urls[0], category_suffix)
+                yield Request(url=category_url, callback=self.parse_category)
+
+    def parse_block(self, response):
+        pass
+
+    def parse_category(self, response):
         post_nodes = response.xpath('//a[@class="page-link lia-link-navigation lia-custom-event"]')
         for post_node in post_nodes:
             post_suffix = post_node.xpath('./@href').get('')
@@ -36,7 +59,6 @@ class CommunitySpider(scrapy.Spider):
         yield Request(url=next_url, callback=self.parse)
 
     def parse_post(self, response):
-
         item_loader = WebCrawlerItemLoader(item=WebCrawlerItem())
 
         class_question_div = 'lia-quilt lia-quilt-forum-message lia-quilt-layout-forum-topic-message-support'
@@ -57,3 +79,10 @@ class CommunitySpider(scrapy.Spider):
         item_loader.add_value('description', description)
 
         yield item_loader.load_item()
+
+    def _is_category_url(self, url):
+        url_tokens = url.split('/')
+        if len(url_tokens) < 2 or url_tokens[-2] != 'bd-p':
+            return False
+        else:
+            return True
